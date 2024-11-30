@@ -13,12 +13,12 @@ outputs:
     value: ${{ steps.deep-thought.outputs.answer }}
 
 runs:
-  using: composite
+  using: "composite"
   steps:
     - name: Awesome bash script
       id: deep-thought
       shell: bash
       run: |
-        echo "Hello '${{ inputs.who-to-greet }}'."
+        echo "Hello ${{ inputs.who-to-greet }}."
         echo "answer=42" >> $GITHUB_OUTPUT
         echo "So long, and thanks for all the fish."
