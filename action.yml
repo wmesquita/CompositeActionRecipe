@@ -1,12 +1,12 @@
-name: "Composite action recipe"
+name: "Composite Action Recipe"
 description: "Greets the user and returns 42."
 inputs:
-  who-to-greet: # id of input
+  who-to-greet:
     description: "Who to greet"
     required: true
     default: "World"
 outputs:
-  anwser:
+  answer:
     description: "Answer to life, the universe, and everything"
     value: ${{ steps.deep-thought.outputs.answer }}
 runs:
@@ -16,14 +16,16 @@ runs:
       uses: actions/github-script@v6
       with:
         script: |
-          var who-to-greet = core.getInput('who-to-greet');
-          core.notice(`Hello ${who-to-greet}`);
-          core.setOutput('answer', 42);
+          var whoToGreet = core.getInput('who-to-greet')
+          core.notice(`Hello ${whoToGreet}`)
+          core.setOutput('answer', 42)
+          core.notice(`Worklfow called by event ${context.eventName}`)
+
           if (context.eventName === 'issues') {
-            github.issues.createComment({
+            github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Thanks for reporting!'
-            });
+              body: '👋 Thanks for reporting!'
+            })
           }

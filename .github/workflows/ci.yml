@@ -4,6 +4,10 @@ on:
   pull_request:
   issues:
     types: [opened]
+
+permissions:
+  issues: write
+
 jobs:
   ci-job:
     runs-on: ubuntu-latest
